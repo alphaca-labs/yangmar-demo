@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: '/yangmar-demo',
+  assetPrefix: '/yangmar-demo/',
+  images: {
+    unoptimized: true,
+  },
   transpilePackages: ['three'],
   webpack: (config) => {
     config.externals.push({
