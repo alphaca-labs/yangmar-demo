@@ -1,24 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-white text-[#1A1A1A] antialiased;
+    @apply bg-[#0a0a0a] text-white antialiased;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-[#1A1A1A] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#333] transition-colors;
+    @apply bg-[#39FF14] text-black px-8 py-3 font-bold uppercase tracking-wider
+           hover:shadow-[0_0_20px_rgba(57,255,20,0.6)] transition-all duration-300
+           border-2 border-[#39FF14];
   }
 
   .btn-secondary {
-    @apply border border-[#E0E0E0] text-[#1A1A1A] px-8 py-3 rounded-xl font-semibold hover:bg-[#F5F5F5] transition-colors;
+    @apply border-2 border-[#FF69B4] text-[#FF69B4] px-8 py-3 font-bold uppercase tracking-wider
+           hover:bg-[#FF69B4] hover:text-black transition-all duration-300
+           hover:shadow-[0_0_20px_rgba(255,105,180,0.5)];
   }
 
   .container-custom {
     @apply max-w-[1200px] mx-auto px-6;
   }
+
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+  }
+
+  .text-neon-green {
+    color: #39FF14;
+    text-shadow: 0 0 10px rgba(57,255,20,0.7), 0 0 20px rgba(57,255,20,0.4);
+  }
+
+  .text-neon-pink {
+    color: #FF69B4;
+    text-shadow: 0 0 10px rgba(255,105,180,0.7), 0 0 20px rgba(255,105,180,0.4);
+  }
+
+  .text-neon-cyan {
+    color: #00FFFF;
+    text-shadow: 0 0 10px rgba(0,255,255,0.7), 0 0 20px rgba(0,255,255,0.4);
+  }
+
+  .border-neon-green {
+    border-color: #39FF14;
+    box-shadow: 0 0 8px rgba(57,255,20,0.3), inset 0 0 8px rgba(57,255,20,0.1);
+  }
+
+  .border-neon-pink {
+    border-color: #FF69B4;
+    box-shadow: 0 0 8px rgba(255,105,180,0.3), inset 0 0 8px rgba(255,105,180,0.1);
+  }
+
+  .border-neon-cyan {
+    border-color: #00FFFF;
+    box-shadow: 0 0 8px rgba(0,255,255,0.3), inset 0 0 8px rgba(0,255,255,0.1);
+  }
+}
+
+/* Noise texture overlay */
+.noise-bg {
+  position: relative;
+}
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' fill='white'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scanline effect */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.1) 2px,
+    rgba(0,0,0,0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitch-text {
+  animation: glitch 3s infinite;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Pixel border */
+.pixel-border {
+  border: 3px solid;
+  border-image: repeating-linear-gradient(
+    90deg,
+    #39FF14 0px,
+    #39FF14 4px,
+    #FF69B4 4px,
+    #FF69B4 8px,
+    #00FFFF 8px,
+    #00FFFF 12px
+  ) 3;
+}
+
+/* Dotted pattern background */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(57,255,20,0.15) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Blink animation for retro feel */
+@keyframes blink-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.blink-cursor {
+  animation: blink-cursor 1s step-end infinite;
+}
+
+/* Neon pulse */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+  50% { opacity: 0.8; text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+}
+.neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+/* Rainbow border animation */
+@keyframes rainbow-border {
+  0% { border-color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.5); }
+  33% { border-color: #FF69B4; box-shadow: 0 0 10px rgba(255,105,180,0.5); }
+  66% { border-color: #00FFFF; box-shadow: 0 0 10px rgba(0,255,255,0.5); }
+  100% { border-color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.5); }
+}
+.rainbow-border {
+  animation: rainbow-border 3s linear infinite;
+}
+
+/* Checkerboard pattern */
+.checker-pattern {
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 }

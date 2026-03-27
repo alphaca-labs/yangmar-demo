@@ -10,21 +10,21 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white border-b border-[#E0E0E0]">
+    <header className="bg-[#0a0a0a] border-b border-[#333]">
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
-          <StaticLink href="/" className="text-xl font-bold tracking-tight">
-            yangmar
+          <StaticLink href="/" className="font-pixel text-sm text-neon-green tracking-tight hover:text-[#39FF14] transition-colors">
+            YANGMAR
           </StaticLink>
 
           <nav className="hidden md:flex items-center gap-8">
-            <StaticLink href="/products" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+            <StaticLink href="/products" className="text-sm text-[#888] hover:text-[#00FFFF] transition-colors uppercase tracking-wider">
               shop
             </StaticLink>
-            <StaticLink href="/donation" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+            <StaticLink href="/donation" className="text-sm text-[#888] hover:text-[#00FFFF] transition-colors uppercase tracking-wider">
               donation
             </StaticLink>
-            <StaticLink href="/story" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+            <StaticLink href="/story" className="text-sm text-[#888] hover:text-[#00FFFF] transition-colors uppercase tracking-wider">
               story
             </StaticLink>
           </nav>
@@ -32,18 +32,18 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <StaticLink
               href="/cart"
-              className="relative text-sm text-[#666] hover:text-[#1A1A1A] transition-colors"
+              className="relative text-sm text-[#888] hover:text-[#FF69B4] transition-colors uppercase tracking-wider"
             >
               cart
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-4 bg-[#1A1A1A] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -top-2 -right-4 bg-[#FF69B4] text-black text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-[0_0_8px_rgba(255,105,180,0.6)]">
                   {cartCount}
                 </span>
               )}
             </StaticLink>
 
             <button
-              className="md:hidden text-[#1A1A1A] ml-2"
+              className="md:hidden text-[#39FF14] ml-2 text-xl"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? '✕' : '☰'}
@@ -52,14 +52,14 @@ export default function Header() {
         </div>
 
         {menuOpen && (
-          <nav className="md:hidden pt-4 pb-2 border-t border-[#E0E0E0] mt-4 flex flex-col gap-3">
-            <StaticLink href="/products" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+          <nav className="md:hidden pt-4 pb-2 border-t border-[#333] mt-4 flex flex-col gap-3">
+            <StaticLink href="/products" className="text-sm text-[#888] hover:text-[#00FFFF] uppercase tracking-wider">
               shop
             </StaticLink>
-            <StaticLink href="/donation" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+            <StaticLink href="/donation" className="text-sm text-[#888] hover:text-[#00FFFF] uppercase tracking-wider">
               donation
             </StaticLink>
-            <StaticLink href="/story" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+            <StaticLink href="/story" className="text-sm text-[#888] hover:text-[#00FFFF] uppercase tracking-wider">
               story
             </StaticLink>
           </nav>

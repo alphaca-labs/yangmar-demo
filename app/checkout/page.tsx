@@ -37,56 +37,56 @@ export default function CheckoutPage() {
 
   return (
     <div className="container-custom py-12 md:py-16">
-      <h1 className="text-2xl font-bold mb-8">checkout</h1>
+      <h1 className="text-2xl font-bold mb-8 text-white font-pixel text-sm">CHECKOUT</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <form onSubmit={handleSubmit} className="lg:col-span-2 space-y-6">
-          <div className="border border-[#E0E0E0] rounded-xl p-6">
-            <h2 className="text-sm font-bold mb-4 text-[#666] uppercase tracking-wider">shipping</h2>
+          <div className="border-2 border-[#333] bg-[#111] p-6">
+            <h2 className="font-pixel text-[8px] text-[#00FFFF] mb-4 uppercase tracking-wider">SHIPPING</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-[#666] mb-2">이름 *</label>
+                <label className="block text-sm text-[#888] mb-2">이름 *</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 focus:border-[#1A1A1A] focus:outline-none"
+                  className="w-full border-2 border-[#333] bg-[#0a0a0a] px-4 py-3 text-white focus:border-[#39FF14] focus:outline-none transition-colors placeholder:text-[#555]"
                   placeholder="홍길동"
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#666] mb-2">연락처 *</label>
+                <label className="block text-sm text-[#888] mb-2">연락처 *</label>
                 <input
                   type="tel"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 focus:border-[#1A1A1A] focus:outline-none"
+                  className="w-full border-2 border-[#333] bg-[#0a0a0a] px-4 py-3 text-white focus:border-[#39FF14] focus:outline-none transition-colors placeholder:text-[#555]"
                   placeholder="010-1234-5678"
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#666] mb-2">배송 주소 *</label>
+                <label className="block text-sm text-[#888] mb-2">배송 주소 *</label>
                 <input
                   type="text"
                   required
                   value={formData.address}
                   onChange={(e) => setFormData({...formData, address: e.target.value})}
-                  className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 focus:border-[#1A1A1A] focus:outline-none"
+                  className="w-full border-2 border-[#333] bg-[#0a0a0a] px-4 py-3 text-white focus:border-[#39FF14] focus:outline-none transition-colors placeholder:text-[#555]"
                   placeholder="서울시 강남구..."
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#666] mb-2">배송 메시지</label>
+                <label className="block text-sm text-[#888] mb-2">배송 메시지</label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 focus:border-[#1A1A1A] focus:outline-none"
+                  className="w-full border-2 border-[#333] bg-[#0a0a0a] px-4 py-3 text-white focus:border-[#39FF14] focus:outline-none transition-colors placeholder:text-[#555]"
                   rows={3}
                   placeholder="배송 시 요청사항을 입력해주세요"
                 />
@@ -94,11 +94,11 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="border border-[#E0E0E0] rounded-xl p-6">
-            <h2 className="text-sm font-bold mb-4 text-[#666] uppercase tracking-wider">payment</h2>
-            <div className="bg-[#F5F5F5] rounded-xl p-4 text-center text-[#666]">
-              <p className="text-sm">데모 버전입니다</p>
-              <p className="text-xs mt-1">실제 결제는 진행되지 않습니다</p>
+          <div className="border-2 border-[#333] bg-[#111] p-6">
+            <h2 className="font-pixel text-[8px] text-[#FF69B4] mb-4 uppercase tracking-wider">PAYMENT</h2>
+            <div className="border-2 border-[#333] bg-[#0a0a0a] p-4 text-center">
+              <p className="text-sm text-[#888]">데모 버전입니다</p>
+              <p className="font-pixel text-[7px] text-[#555] mt-1">NO REAL PAYMENT</p>
             </div>
           </div>
 
@@ -108,37 +108,37 @@ export default function CheckoutPage() {
         </form>
 
         <div className="lg:col-span-1">
-          <div className="border border-[#E0E0E0] rounded-xl p-6 sticky top-20">
-            <h2 className="text-sm font-bold mb-4 text-[#666] uppercase tracking-wider">order summary</h2>
+          <div className="border-2 border-[#333] bg-[#111] p-6 sticky top-20">
+            <h2 className="font-pixel text-[8px] text-[#FF69B4] mb-4 uppercase tracking-wider">ORDER SUMMARY</h2>
 
             <div className="space-y-3 mb-6">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between text-sm">
-                  <span className="text-[#666]">
+                  <span className="text-[#888]">
                     {item.nameEn} x {item.quantity}
                   </span>
-                  <span>
+                  <span className="text-white">
                     {(item.price * item.quantity).toLocaleString()}원
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-2 mb-6 pt-4 border-t border-[#E0E0E0]">
+            <div className="space-y-2 mb-6 pt-4 border-t border-[#333]">
               <div className="flex justify-between text-sm">
-                <span className="text-[#666]">배송비</span>
-                <span>무료</span>
+                <span className="text-[#888]">배송비</span>
+                <span className="text-[#39FF14]">무료</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-bold">합계</span>
-                <span className="text-xl font-bold">{getTotalPrice().toLocaleString()}원</span>
+                <span className="font-bold text-white">합계</span>
+                <span className="text-xl font-bold text-[#39FF14]">{getTotalPrice().toLocaleString()}원</span>
               </div>
             </div>
 
-            <div className="bg-[#F5F5F5] rounded-xl p-4 text-center">
-              <p className="text-xs text-[#666] mb-1">이 주문으로</p>
-              <p className="text-xl font-bold">{getTotalDonation()}켤레</p>
-              <p className="text-xs text-[#666] mt-1">기부됩니다</p>
+            <div className="border-2 border-[#39FF14] bg-[#0a0a0a] p-4 text-center" style={{ boxShadow: '0 0 10px rgba(57,255,20,0.2)' }}>
+              <p className="font-pixel text-[7px] text-[#888] mb-1">DONATION</p>
+              <p className="text-xl font-bold text-[#39FF14]">{getTotalDonation()}켤레</p>
+              <p className="font-pixel text-[7px] text-[#888] mt-1">DONATED</p>
             </div>
           </div>
         </div>

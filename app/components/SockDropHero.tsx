@@ -12,7 +12,7 @@ interface SockBody extends Matter.Body {
 
 const SOCK_SIZE = 80
 const MAX_SOCKS = 200
-const INITIAL_SOCK_COUNT = 40 // 초기에 쌓여있는 양말 수
+const INITIAL_SOCK_COUNT = 40
 
 const SockDropHero = () => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +29,6 @@ const SockDropHero = () => {
   const addSale = useDonationStore(state => state.addSale)
   const totalDonated = getTotalDonated()
 
-  // ResizeObserver로 컨테이너 크기 추적
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -41,7 +40,6 @@ const SockDropHero = () => {
     return () => obs.disconnect()
   }, [])
 
-  // Matter.js 엔진 초기화
   useEffect(() => {
     const { width, height } = containerSize
     if (!width || !height || initializedRef.current) return
@@ -54,7 +52,6 @@ const SockDropHero = () => {
     engineRef.current = engine
     runnerRef.current = runner
 
-    // 바닥과 벽
     const ground = Matter.Bodies.rectangle(width / 2, height + 25, width + 200, 50, { isStatic: true })
     const leftWall = Matter.Bodies.rectangle(-25, height / 2, 50, height * 2, { isStatic: true })
     const rightWall = Matter.Bodies.rectangle(width + 25, height / 2, 50, height * 2, { isStatic: true })
@@ -62,14 +59,12 @@ const SockDropHero = () => {
     Matter.Composite.add(engine.world, [ground, leftWall, rightWall])
     Matter.Runner.run(runner, engine)
 
-    // 초기 양말 생성 — 바닥 1/3 영역에 쌓여있는 상태
     const initialSocks: SockBody[] = []
-    const bottomThird = height * (2 / 3) // 하단 1/3 시작점
+    const bottomThird = height * (2 / 3)
 
     for (let i = 0; i < INITIAL_SOCK_COUNT; i++) {
       const color: 'white' | 'black' = Math.random() < 0.5 ? 'white' : 'black'
       const x = 40 + Math.random() * (width - 80)
-      // 바닥 1/3 영역 안에서 랜덤 y (약간의 높이 변화)
       const y = bottomThird + Math.random() * (height * 0.28)
       const angle = (Math.random() - 0.5) * Math.PI * 0.6
 
@@ -90,7 +85,6 @@ const SockDropHero = () => {
 
     setRenderedSocks(initialSocks)
 
-    // 렌더 루프
     const update = () => {
       Object.values(bodiesRef.current).forEach(body => {
         if (body.sockRef?.current) {
@@ -110,7 +104,6 @@ const SockDropHero = () => {
     }
   }, [containerSize])
 
-  // 클릭으로 양말 추가
   const addSock = useCallback(() => {
     const engine = engineRef.current
     const { width } = containerSize
@@ -136,7 +129,6 @@ const SockDropHero = () => {
 
     setRenderedSocks(prev => {
       const next = [...prev, body]
-      // 오래된 양말 정리
       if (next.length > MAX_SOCKS) {
         const oldest = next[0]
         Matter.Composite.remove(engine.world, oldest)
@@ -152,21 +144,29 @@ const SockDropHero = () => {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[600px] md:h-[700px] bg-[#FAFAFA] cursor-pointer overflow-hidden select-none"
+      className="relative w-full h-[600px] md:h-[700px] bg-[#0a0a0a] cursor-pointer overflow-hidden select-none dot-pattern"
       onClick={addSock}
     >
+      {/* Neon grid lines */}
+      <div className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage: `linear-gradient(rgba(57,255,20,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,0.3) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
       {/* 중앙 기부 카운터 UI */}
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none">
-        <p className="text-xs tracking-[0.3em] uppercase text-[#999] mb-3">
-          donated socks
+        <p className="font-pixel text-[10px] md:text-xs tracking-[0.3em] uppercase text-[#00FFFF] mb-4 neon-pulse">
+          DONATED SOCKS
         </p>
-        <div className="text-6xl md:text-8xl font-black text-[#1A1A1A] tabular-nums leading-none mb-2"
-             style={{ textShadow: '0 2px 20px rgba(255,255,255,0.8)' }}>
+        <div className="text-6xl md:text-8xl font-black tabular-nums leading-none mb-2 text-neon-green"
+             style={{ textShadow: '0 0 40px rgba(57,255,20,0.5), 0 0 80px rgba(57,255,20,0.3)' }}>
           {totalDonated.toLocaleString()}
         </div>
-        <p className="text-sm text-[#666] mb-1">켤레의 양말이 기부되었습니다</p>
-        <p className="text-xs text-[#999] mt-6 animate-pulse">
-          화면을 클릭해서 양말을 기부하세요 🧦
+        <p className="text-sm text-[#888] mb-1">켤레의 양말이 기부되었습니다</p>
+        <p className="font-pixel text-[8px] text-[#FF69B4] mt-6 neon-pulse">
+          &#9654; CLICK TO DROP SOCKS &#9664;
         </p>
       </div>
 
@@ -176,6 +176,11 @@ const SockDropHero = () => {
           <Sock key={body.id} ref={body.sockRef} color={body.color!} />
         ))}
       </div>
+
+      {/* Bottom gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 z-30 pointer-events-none"
+        style={{ background: 'linear-gradient(transparent, rgba(10,10,10,0.8))' }}
+      />
     </section>
   )
 }

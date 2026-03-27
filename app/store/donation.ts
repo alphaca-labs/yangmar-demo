@@ -42,8 +42,10 @@ interface DonationState {
   cheerMessages: CheerMessage[]
   milestones: Milestone[]
   deadline: string
+  relayCount: number
   addSale: (color: 'white' | 'black', quantity: number) => void
   addCheerMessage: (msg: Omit<CheerMessage, 'id' | 'createdAt'>) => void
+  incrementRelay: () => void
   getTotalDonated: () => number
   getWhitePercent: () => number
   getBlackPercent: () => number
@@ -108,6 +110,8 @@ export const useDonationStore = create<DonationState>((set, get) => ({
 
   deadline: '2026-04-10',
 
+  relayCount: 128,
+
   addSale: (color, quantity) => set((state) => ({
     sales: {
       ...state.sales,
@@ -124,6 +128,10 @@ export const useDonationStore = create<DonationState>((set, get) => ({
       { ...msg, id: Date.now().toString(), createdAt: Date.now() },
       ...state.cheerMessages.slice(0, 19),
     ],
+  })),
+
+  incrementRelay: () => set((state) => ({
+    relayCount: state.relayCount + 1,
   })),
 
   getTotalDonated: () => {

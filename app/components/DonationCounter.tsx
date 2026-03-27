@@ -28,15 +28,22 @@ export default function DonationCounter() {
   }, [totalDonated])
 
   return (
-    <div className="bg-[#1A1A1A] text-white py-2 sticky top-0 z-50">
-      <div className="container-custom">
-        <p className="text-center text-sm">
-          양말 하나가 누군가를 따뜻하게 해요 ·{' '}
-          <span className="font-bold">
-            {displayCount.toLocaleString()}
-          </span>
-          켤레 기부 완료
-        </p>
+    <div className="bg-black border-b-2 border-neon-green py-2 sticky top-0 z-50 overflow-hidden">
+      <div className="flex whitespace-nowrap">
+        <div className="animate-marquee flex gap-12">
+          {[...Array(6)].map((_, i) => (
+            <span key={i} className="text-sm flex items-center gap-3">
+              <span className="text-neon-green font-pixel text-[10px]">&#9654;</span>
+              <span className="text-[#39FF14]">
+                {displayCount.toLocaleString()}켤레 기부 완료
+              </span>
+              <span className="text-[#FF69B4]">&#x2726;</span>
+              <span className="text-[#00FFFF]">1구매 = 1기부</span>
+              <span className="text-[#FF69B4]">&#x2726;</span>
+              <span className="text-white">양말이 따뜻함이 됩니다</span>
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>
+      <body className="bg-[#0a0a0a]">
         <DonationCounter />
         <Header />
         <main className="min-h-screen">

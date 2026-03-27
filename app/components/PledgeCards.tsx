@@ -33,34 +33,35 @@ export default function PledgeCards() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="border border-[#1A1A1A] rounded-2xl p-6 relative overflow-hidden"
+          transition={{ duration: 0.5, type: 'spring', bounce: 0.4 }}
+          className="border-2 border-[#FF69B4] p-6 relative overflow-hidden bg-[#111]"
+          style={{ boxShadow: '0 0 15px rgba(255,105,180,0.2)' }}
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">🖤</span>
-            <span className="text-sm font-bold">블랙팀 공약</span>
+            <span className="font-pixel text-[10px] text-[#FF69B4]">BLK</span>
+            <span className="text-sm font-bold text-white">블랙팀 공약</span>
             {winner === 'black' && (
               <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
+                animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 1 }}
                 className="text-sm"
               >
                 🔥
               </motion.span>
             )}
           </div>
-          <p className="text-sm text-[#666] leading-relaxed mb-4">
+          <p className="text-sm text-[#999] leading-relaxed mb-4">
             &ldquo;{blackPledge.description}&rdquo;
           </p>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-bold">현재 {blackPercent}%</span>
+            <span className="text-sm font-bold text-[#FF69B4]">현재 {blackPercent}%</span>
             {winner === 'black' && (
-              <span className="text-xs bg-[#1A1A1A] text-white px-2 py-0.5 rounded-full">리딩</span>
+              <span className="font-pixel text-[8px] bg-[#FF69B4] text-black px-3 py-1">LEADING</span>
             )}
           </div>
           <StaticLink
             href="/products/black-socks"
-            className="block text-center text-sm py-2.5 bg-[#1A1A1A] text-white rounded-xl hover:bg-[#333] transition-colors"
+            className="block text-center text-sm py-2.5 bg-[#FF69B4] text-black font-bold hover:shadow-[0_0_20px_rgba(255,105,180,0.5)] transition-all"
           >
             블랙 양말 사러가기 →
           </StaticLink>
@@ -72,34 +73,35 @@ export default function PledgeCards() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="border border-[#E0E0E0] rounded-2xl p-6 relative overflow-hidden"
+          transition={{ duration: 0.5, delay: 0.1, type: 'spring', bounce: 0.4 }}
+          className="border-2 border-[#00FFFF] p-6 relative overflow-hidden bg-[#111]"
+          style={{ boxShadow: '0 0 15px rgba(0,255,255,0.2)' }}
         >
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">🤍</span>
-            <span className="text-sm font-bold">화이트팀 공약</span>
+            <span className="font-pixel text-[10px] text-[#00FFFF]">WHT</span>
+            <span className="text-sm font-bold text-white">화이트팀 공약</span>
             {winner === 'white' && (
               <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
+                animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 1 }}
                 className="text-sm"
               >
                 🔥
               </motion.span>
             )}
           </div>
-          <p className="text-sm text-[#666] leading-relaxed mb-4">
+          <p className="text-sm text-[#999] leading-relaxed mb-4">
             &ldquo;{whitePledge.description}&rdquo;
           </p>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-bold">현재 {whitePercent}%</span>
+            <span className="text-sm font-bold text-[#00FFFF]">현재 {whitePercent}%</span>
             {winner === 'white' && (
-              <span className="text-xs bg-[#1A1A1A] text-white px-2 py-0.5 rounded-full">리딩</span>
+              <span className="font-pixel text-[8px] bg-[#00FFFF] text-black px-3 py-1">LEADING</span>
             )}
           </div>
           <StaticLink
             href="/products/white-socks"
-            className="block text-center text-sm py-2.5 border border-[#1A1A1A] rounded-xl hover:bg-[#F5F5F5] transition-colors"
+            className="block text-center text-sm py-2.5 border-2 border-[#00FFFF] text-[#00FFFF] font-bold hover:bg-[#00FFFF] hover:text-black transition-all"
           >
             화이트 양말 사러가기 →
           </StaticLink>
@@ -108,8 +110,8 @@ export default function PledgeCards() {
 
       {/* 카운트다운 */}
       <div className="sm:col-span-2 text-center">
-        <p className="text-xs text-[#999]">
-          공약 마감까지 <span className="font-bold text-[#1A1A1A]">D-{daysLeft}</span> 남음
+        <p className="font-pixel text-[8px] text-[#888]">
+          DEADLINE <span className="text-[#39FF14] neon-pulse">D-{daysLeft}</span>
         </p>
       </div>
     </div>
