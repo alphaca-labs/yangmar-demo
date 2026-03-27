@@ -3,6 +3,7 @@ const nextConfig = {
   output: 'export',
   basePath: '/yangmar-demo',
   assetPrefix: '/yangmar-demo/',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
