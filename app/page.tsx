@@ -1,33 +1,14 @@
-'use client'
-
-import StaticLink from '@/components/StaticLink'
+import SockDropHero from '@/components/SockDropHero'
 import { products } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import RatioBar from '@/components/RatioBar'
+import StaticLink from '@/components/StaticLink'
 
 export default function Home() {
   return (
     <>
       {/* 히어로 */}
-      <section className="py-20 md:py-32">
-        <div className="container-custom text-center">
-          <p className="text-sm text-[#666] mb-4 tracking-widest uppercase">1 purchase = 1 donation</p>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-            한 켤레를 사면,<br />한 켤레가 기부됩니다
-          </h1>
-          <p className="text-[#666] mb-10 max-w-md mx-auto">
-            양말 하나가 누군가를 따뜻하게 해요
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <StaticLink href="/products" className="btn-primary">
-              양말 구경하기
-            </StaticLink>
-            <StaticLink href="/story" className="btn-secondary">
-              브랜드 스토리
-            </StaticLink>
-          </div>
-        </div>
-      </section>
+      <SockDropHero />
 
       {/* 흑/백 점유율 비율 바 */}
       <section className="py-12 bg-[#F5F5F5]">
