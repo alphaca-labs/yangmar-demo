@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useCartStore } from '@/store/cart'
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export default function Header() {
   const items = useCartStore(state => state.items)
@@ -16,7 +15,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image 
-              src={`${basePath}/images/yangmar-logo.png`}
+              src="/images/yangmar-logo.png"
               alt="양마르" 
               width={40} 
               height={40}
