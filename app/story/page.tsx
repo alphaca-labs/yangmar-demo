@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import StaticLink from '@/components/StaticLink'
 
 export default function StoryPage() {
   return (
@@ -115,9 +115,9 @@ export default function StoryPage() {
             양마르는 당신의 참여로 완성됩니다. 
             오늘 하나 사면, 오늘 하나 기부됩니다.
           </p>
-          <Link href="/products" className="inline-block bg-white text-black px-8 py-4 font-semibold text-lg hover:bg-gray-100 transition-colors">
+          <StaticLink href="/products" className="inline-block bg-white text-black px-8 py-4 font-semibold text-lg hover:bg-gray-100 transition-colors">
             양말 둘러보기
-          </Link>
+          </StaticLink>
         </div>
       </section>
     </div>

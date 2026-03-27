@@ -1,9 +1,9 @@
-import Link from 'next/link'
+import StaticLink from '@/components/StaticLink'
 import { Product } from '@/data/products'
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/products/${product.id}`} className="group">
+    <StaticLink href={`/products/${product.id}`} className="group">
       <div className="border border-gray-200 hover:border-black transition-all overflow-hidden">
         <div className="aspect-square bg-gray-100 relative">
           {/* 이미지 플레이스홀더 - 실제 이미지가 없으므로 색상으로 표시 */}
@@ -25,6 +25,6 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
       </div>
-    </Link>
+    </StaticLink>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import StaticLink from '@/components/StaticLink'
 import { useCartStore } from '@/store/cart'
 
 export default function OrderCompletePage() {
@@ -59,12 +59,12 @@ export default function OrderCompletePage() {
 
         {/* CTA */}
         <div className="space-y-4">
-          <Link href="/donation" className="block btn-primary">
+          <StaticLink href="/donation" className="block btn-primary">
             기부 현황 보기
-          </Link>
-          <Link href="/products" className="block btn-secondary">
+          </StaticLink>
+          <StaticLink href="/products" className="block btn-secondary">
             계속 쇼핑하기
-          </Link>
+          </StaticLink>
         </div>
 
         {/* 배송 안내 */}

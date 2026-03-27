@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import StaticLink from '@/components/StaticLink'
 import dynamic from 'next/dynamic'
 import { getBestSellers } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
@@ -29,12 +29,12 @@ export default function Home() {
             양마르와 함께하는 따뜻한 나눔
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/products" className="btn-primary">
+            <StaticLink href="/products" className="btn-primary">
               양말 구경하기
-            </Link>
-            <Link href="/story" className="btn-secondary">
+            </StaticLink>
+            <StaticLink href="/story" className="btn-secondary">
               브랜드 스토리
-            </Link>
+            </StaticLink>
           </div>
         </div>
       </section>
@@ -50,9 +50,9 @@ export default function Home() {
           </div>
           <DonationGlobe sockCount={50} />
           <div className="text-center mt-8">
-            <Link href="/donation" className="btn-secondary">
+            <StaticLink href="/donation" className="btn-secondary">
               자세히 보기
-            </Link>
+            </StaticLink>
           </div>
         </div>
       </section>
@@ -72,9 +72,9 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link href="/products" className="btn-primary">
+            <StaticLink href="/products" className="btn-primary">
               전체 상품 보기
-            </Link>
+            </StaticLink>
           </div>
         </div>
       </section>
@@ -89,9 +89,9 @@ export default function Home() {
             우리는 단순히 양말을 파는 것이 아닙니다.<br />
             당신의 소비가 누군가의 따뜻함이 되는 경험을 만듭니다.
           </p>
-          <Link href="/story" className="inline-block bg-white text-black px-8 py-3 font-semibold hover:bg-gray-100 transition-colors">
+          <StaticLink href="/story" className="inline-block bg-white text-black px-8 py-3 font-semibold hover:bg-gray-100 transition-colors">
             우리 이야기 더 보기
-          </Link>
+          </StaticLink>
         </div>
       </section>
     </>

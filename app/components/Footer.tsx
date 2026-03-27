@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import StaticLink from '@/components/StaticLink'
 
 export default function Footer() {
   return (
@@ -16,19 +16,19 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">바로가기</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-white transition-colors">
+                <StaticLink href="/products" className="text-gray-300 hover:text-white transition-colors">
                   상품
-                </Link>
+                </StaticLink>
               </li>
               <li>
-                <Link href="/donation" className="text-gray-300 hover:text-white transition-colors">
+                <StaticLink href="/donation" className="text-gray-300 hover:text-white transition-colors">
                   기부 현황
-                </Link>
+                </StaticLink>
               </li>
               <li>
-                <Link href="/story" className="text-gray-300 hover:text-white transition-colors">
+                <StaticLink href="/story" className="text-gray-300 hover:text-white transition-colors">
                   브랜드 스토리
-                </Link>
+                </StaticLink>
               </li>
             </ul>
           </div>
@@ -47,12 +47,12 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <p>© 2026 YANGMAR. All rights reserved.</p>
             <div className="flex gap-4">
-              <Link href="/terms" className="hover:text-white transition-colors">
+              <StaticLink href="/terms" className="hover:text-white transition-colors">
                 이용약관
-              </Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              </StaticLink>
+              <StaticLink href="/privacy" className="hover:text-white transition-colors">
                 개인정보처리방침
-              </Link>
+              </StaticLink>
             </div>
           </div>
         </div>
