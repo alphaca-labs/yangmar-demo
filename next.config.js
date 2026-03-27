@@ -7,6 +7,9 @@ const nextConfig = {
     unoptimized: true,
   },
   transpilePackages: ['three'],
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/yangmar-demo',
+  },
   webpack: (config) => {
     config.externals.push({
       'utf-8-validate': 'commonjs utf-8-validate',
