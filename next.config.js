@@ -7,7 +7,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  transpilePackages: ['three'],
   env: {
     NEXT_PUBLIC_BASE_PATH: '/yangmar-demo',
   },

@@ -1,55 +1,69 @@
 'use client'
 
+import { useState } from 'react'
 import StaticLink from '@/components/StaticLink'
-import Image from 'next/image'
 import { useCartStore } from '@/store/cart'
-
 
 export default function Header() {
   const items = useCartStore(state => state.items)
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white border-b border-gray-200">
+    <header className="bg-white border-b border-[#E0E0E0]">
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
-          <StaticLink href="/" className="flex items-center gap-2">
-            <Image 
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/yangmar-logo.png`}
-              alt="양마르" 
-              width={40} 
-              height={40}
-              className="w-8 h-8 md:w-10 md:h-10"
-            />
-            <span className="text-xl md:text-2xl font-bold">양마르</span>
+          <StaticLink href="/" className="text-xl font-bold tracking-tight">
+            yangmar
           </StaticLink>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <StaticLink href="/products" className="hover:text-gray-600 transition-colors">
-              상품
+          <nav className="hidden md:flex items-center gap-8">
+            <StaticLink href="/products" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+              shop
             </StaticLink>
-            <StaticLink href="/donation" className="hover:text-gray-600 transition-colors">
-              기부 현황
+            <StaticLink href="/donation" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+              donation
             </StaticLink>
-            <StaticLink href="/story" className="hover:text-gray-600 transition-colors">
-              브랜드 스토리
+            <StaticLink href="/story" className="text-sm text-[#666] hover:text-[#1A1A1A] transition-colors">
+              story
             </StaticLink>
           </nav>
 
           <div className="flex items-center gap-4">
-            <StaticLink 
-              href="/cart" 
-              className="relative hover:text-gray-600 transition-colors"
+            <StaticLink
+              href="/cart"
+              className="relative text-sm text-[#666] hover:text-[#1A1A1A] transition-colors"
             >
-              🛒
+              cart
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-4 bg-[#1A1A1A] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
             </StaticLink>
+
+            <button
+              className="md:hidden text-[#1A1A1A] ml-2"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? '✕' : '☰'}
+            </button>
           </div>
         </div>
+
+        {menuOpen && (
+          <nav className="md:hidden pt-4 pb-2 border-t border-[#E0E0E0] mt-4 flex flex-col gap-3">
+            <StaticLink href="/products" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+              shop
+            </StaticLink>
+            <StaticLink href="/donation" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+              donation
+            </StaticLink>
+            <StaticLink href="/story" className="text-sm text-[#666] hover:text-[#1A1A1A]">
+              story
+            </StaticLink>
+          </nav>
+        )}
       </div>
     </header>
   )

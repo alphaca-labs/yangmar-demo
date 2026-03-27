@@ -1,141 +1,139 @@
 'use client'
 
 import { useState } from 'react'
-import { getProductById } from '@/data/products'
+import { getProductById, MAX_STOCK } from '@/data/products'
 import { useCartStore } from '@/store/cart'
+import { useDonationStore } from '@/store/donation'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export default function ProductDetail({ id }: { id: string }) {
   const product = getProductById(id)
   const addItem = useCartStore(state => state.addItem)
+  const sales = useDonationStore(state => state.sales)
 
-  const [bundle, setBundle] = useState<1 | 3 | 5 | 10>(1)
   const [quantity, setQuantity] = useState(1)
 
   if (!product) {
     return (
-      <div className="container-custom py-12 text-center">
+      <div className="container-custom py-16 text-center">
         <h1 className="text-2xl font-bold mb-4">상품을 찾을 수 없습니다</h1>
-        <a href={`${basePath}/products/`} className="btn-primary">
+        <a href={`${basePath}/products/`} className="btn-primary inline-block">
           상품 목록으로
         </a>
       </div>
     )
   }
 
-  const bundlePrices = {
-    1: product.price,
-    3: product.price * 3 * 0.95,
-    5: product.price * 5 * 0.90,
-    10: product.price * 10 * 0.85,
-  }
+  const sold = sales[product.color]
+  const remaining = MAX_STOCK - sold
+  const isSoldOut = remaining <= 0
+  const isLow = remaining > 0 && remaining <= 50
+  const maxQty = Math.min(remaining, 20)
 
-  const totalDonation = bundle * quantity
-  const totalPrice = bundlePrices[bundle] * quantity
+  const totalPrice = product.price * quantity
 
   const handleAddToCart = () => {
+    if (isSoldOut) return
     addItem({
-      id: `${product.id}-${bundle}`,
-      name: `${product.name} (${bundle}켤레)`,
-      price: bundlePrices[bundle],
+      id: product.id,
+      name: product.name,
+      nameEn: product.nameEn,
+      color: product.color,
+      price: product.price,
       quantity,
-      bundle,
       image: product.images[0]
     })
     window.location.href = `${basePath}/cart/`
   }
 
   return (
-    <div className="container-custom py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-200 border border-gray-200 flex items-center justify-center">
-            <span className="text-9xl">🧦</span>
-          </div>
+    <div className="container-custom py-12 md:py-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        {/* 상품 이미지 */}
+        <div className="aspect-square rounded-lg flex items-center justify-center relative" style={{
+          backgroundColor: product.color === 'white' ? '#F5F5F5' : '#1A1A1A'
+        }}>
+          <span className="text-[120px]">{product.color === 'white' ? '🤍' : '🖤'}</span>
+          {isSoldOut && (
+            <div className="absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center">
+              <span className="text-white text-3xl font-bold tracking-widest">SOLD OUT</span>
+            </div>
+          )}
         </div>
 
+        {/* 상품 정보 */}
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{product.name}</h1>
-          <p className="text-gray-600 mb-6">{product.description}</p>
+          <p className="text-2xl tracking-wide mb-1">{product.nameEn}</p>
+          <p className="text-sm text-[#666] mb-6">{product.description}</p>
 
-          <div className="mb-6">
-            <label className="block font-semibold mb-3">번들 선택</label>
-            <div className="grid grid-cols-4 gap-2">
-              {([1, 3, 5, 10] as const).map((b) => (
+          <p className="text-3xl font-bold mb-6">{product.price.toLocaleString()}원</p>
+
+          {/* 재고 표시 */}
+          <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#E0E0E0]">
+            <span className="text-sm text-[#666]">남은 수량</span>
+            <span className="text-sm font-bold">{remaining} / {MAX_STOCK}</span>
+            {isLow && <span className="text-xs bg-[#1A1A1A] text-white px-2 py-0.5 rounded-full">마감 임박!</span>}
+          </div>
+
+          {/* 수량 선택 */}
+          {!isSoldOut && (
+            <div className="mb-6">
+              <label className="block text-sm text-[#666] mb-3">수량</label>
+              <div className="flex items-center gap-4">
                 <button
-                  key={b}
-                  onClick={() => setBundle(b)}
-                  className={`py-3 border-2 font-semibold transition-all ${
-                    bundle === b
-                      ? 'border-black bg-black text-white'
-                      : 'border-gray-300 hover:border-black'
-                  }`}
-                >
-                  {b}켤레
-                </button>
-              ))}
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-10 h-10 border border-[#E0E0E0] rounded-lg font-bold hover:bg-[#F5F5F5] transition-colors"
+                >-</button>
+                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(Math.min(maxQty, quantity + 1))}
+                  className="w-10 h-10 border border-[#E0E0E0] rounded-lg font-bold hover:bg-[#F5F5F5] transition-colors"
+                >+</button>
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="mb-6 p-4 bg-gray-50">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-600">묶음 가격</span>
-              <span className="text-2xl font-bold">
-                ₩{bundlePrices[bundle].toLocaleString()}
-              </span>
+          {/* 기부 안내 */}
+          {!isSoldOut && (
+            <div className="mb-8 p-5 bg-[#F5F5F5] rounded-xl text-center">
+              <p className="text-sm text-[#666] mb-1">이 주문으로</p>
+              <p className="text-2xl font-bold mb-1">{quantity}켤레</p>
+              <p className="text-sm text-[#666]">기부됩니다</p>
             </div>
-            {bundle > 1 && (
-              <p className="text-sm text-green-600">
-                개별 구매보다 {Math.round((1 - bundlePrices[bundle] / (product.price * bundle)) * 100)}% 저렴해요!
-              </p>
-            )}
-          </div>
+          )}
 
-          <div className="mb-6">
-            <label className="block font-semibold mb-3">수량</label>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-10 h-10 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors"
-              >-</button>
-              <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-10 h-10 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors"
-              >+</button>
-            </div>
-          </div>
+          {/* 장바구니 담기 */}
+          <button
+            onClick={handleAddToCart}
+            disabled={isSoldOut}
+            className={`w-full py-4 rounded-xl font-semibold text-lg transition-colors ${
+              isSoldOut
+                ? 'bg-[#E0E0E0] text-[#999] cursor-not-allowed'
+                : 'bg-[#1A1A1A] text-white hover:bg-[#333]'
+            }`}
+          >
+            {isSoldOut ? 'SOLD OUT' : `장바구니 담기 · ${totalPrice.toLocaleString()}원`}
+          </button>
 
-          <div className="mb-8 p-6 bg-black text-white text-center">
-            <p className="text-sm mb-2">이 주문으로</p>
-            <p className="text-3xl font-bold mb-2">🎁 {totalDonation}켤레</p>
-            <p className="text-sm">기부됩니다</p>
-          </div>
-
-          <div className="space-y-3">
-            <button onClick={handleAddToCart} className="w-full btn-primary">
-              장바구니 담기 · ₩{totalPrice.toLocaleString()}
-            </button>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <h3 className="font-semibold mb-4">상품 정보</h3>
+          {/* 상품 정보 */}
+          <div className="mt-10 pt-8 border-t border-[#E0E0E0]">
+            <h3 className="text-sm font-bold mb-4 text-[#666] uppercase tracking-wider">product info</h3>
             <dl className="space-y-2 text-sm">
               <div className="flex">
-                <dt className="w-24 text-gray-600">소재</dt>
+                <dt className="w-20 text-[#999]">소재</dt>
                 <dd>{product.material}</dd>
               </div>
               <div className="flex">
-                <dt className="w-24 text-gray-600">사이즈</dt>
+                <dt className="w-20 text-[#999]">사이즈</dt>
                 <dd>{product.size}</dd>
               </div>
               <div className="flex">
-                <dt className="w-24 text-gray-600">세탁법</dt>
+                <dt className="w-20 text-[#999]">세탁법</dt>
                 <dd>{product.washingInstructions}</dd>
               </div>
               <div className="flex">
-                <dt className="w-24 text-gray-600">원산지</dt>
+                <dt className="w-20 text-[#999]">원산지</dt>
                 <dd>{product.madeIn}</dd>
               </div>
             </dl>
