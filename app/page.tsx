@@ -3,6 +3,8 @@ import { products } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import RatioBar from '@/components/RatioBar'
 import StaticLink from '@/components/StaticLink'
+import PledgeCards from '@/components/PledgeCards'
+import MilestoneProgress from '@/components/MilestoneProgress'
 
 export default function Home() {
   return (
@@ -21,6 +23,18 @@ export default function Home() {
           <p className="text-center text-xs text-[#999] mt-4">
             구매할 때마다 실시간 반영됩니다
           </p>
+
+          {/* 공약 카드 */}
+          <div className="mt-8">
+            <PledgeCards />
+          </div>
+        </div>
+      </section>
+
+      {/* 마일스톤 */}
+      <section className="py-12">
+        <div className="container-custom max-w-2xl">
+          <MilestoneProgress compact />
         </div>
       </section>
 

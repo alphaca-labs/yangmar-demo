@@ -3,6 +3,8 @@
 import { useDonationStore } from '@/store/donation'
 import { recipients } from '@/data/donations'
 import RatioBar from '@/components/RatioBar'
+import CheerWall from '@/components/CheerWall'
+import MilestoneProgress from '@/components/MilestoneProgress'
 
 export default function DonationPage() {
   const sales = useDonationStore(state => state.sales)
@@ -48,6 +50,18 @@ export default function DonationPage() {
           <p className="text-sm text-[#666] mt-2">
             {winner !== 'tie' ? `${sales[winner].toLocaleString()}켤레 판매` : ''}
           </p>
+        </div>
+      </section>
+
+      {/* 마일스톤 */}
+      <section className="container-custom max-w-2xl mb-16">
+        <MilestoneProgress />
+      </section>
+
+      {/* 응원 메시지 월 */}
+      <section className="bg-[#F5F5F5] py-12 mb-16">
+        <div className="container-custom max-w-lg">
+          <CheerWall />
         </div>
       </section>
 

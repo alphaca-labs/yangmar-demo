@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import StaticLink from '@/components/StaticLink'
 import { useDonationStore } from '@/store/donation'
+import CheerInput from '@/components/CheerInput'
 
 export default function OrderCompletePage() {
   const getTotalDonated = useDonationStore(state => state.getTotalDonated)
@@ -65,6 +66,11 @@ export default function OrderCompletePage() {
               day: 'numeric'
             })}
           </p>
+        </div>
+
+        {/* 한 줄 메시지 입력 */}
+        <div className="mb-8">
+          <CheerInput />
         </div>
 
         {/* SNS 공유 */}
