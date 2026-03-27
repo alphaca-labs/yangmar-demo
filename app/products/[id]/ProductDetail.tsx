@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { getProductById } from '@/data/products'
 import { useCartStore } from '@/store/cart'
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export default function ProductDetail({ id }: { id: string }) {
   const product = getProductById(id)
-  const router = useRouter()
   const addItem = useCartStore(state => state.addItem)
 
   const [bundle, setBundle] = useState<1 | 3 | 5 | 10>(1)
@@ -17,9 +17,9 @@ export default function ProductDetail({ id }: { id: string }) {
     return (
       <div className="container-custom py-12 text-center">
         <h1 className="text-2xl font-bold mb-4">상품을 찾을 수 없습니다</h1>
-        <button onClick={() => router.push('/products')} className="btn-primary">
+        <a href={`${basePath}/products/`} className="btn-primary">
           상품 목록으로
-        </button>
+        </a>
       </div>
     )
   }
@@ -43,7 +43,7 @@ export default function ProductDetail({ id }: { id: string }) {
       bundle,
       image: product.images[0]
     })
-    router.push('/cart')
+    window.location.href = `${basePath}/cart/`
   }
 
   return (
@@ -98,24 +98,18 @@ export default function ProductDetail({ id }: { id: string }) {
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 className="w-10 h-10 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors"
-              >
-                -
-              </button>
+              >-</button>
               <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
                 className="w-10 h-10 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors"
-              >
-                +
-              </button>
+              >+</button>
             </div>
           </div>
 
           <div className="mb-8 p-6 bg-black text-white text-center">
             <p className="text-sm mb-2">이 주문으로</p>
-            <p className="text-3xl font-bold mb-2">
-              🎁 {totalDonation}켤레
-            </p>
+            <p className="text-3xl font-bold mb-2">🎁 {totalDonation}켤레</p>
             <p className="text-sm">기부됩니다</p>
           </div>
 

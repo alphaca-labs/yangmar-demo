@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cart'
 import { useDonationStore } from '@/store/donation'
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export default function CheckoutPage() {
-  const router = useRouter()
   const { items, getTotalDonation, getTotalPrice, clearCart } = useCartStore()
   const incrementDonation = useDonationStore(state => state.incrementDonation)
 
@@ -18,7 +18,9 @@ export default function CheckoutPage() {
   })
 
   if (items.length === 0) {
-    router.push('/cart')
+    if (typeof window !== 'undefined') {
+      window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/cart/`
+    }
     return null
   }
 
@@ -29,7 +31,7 @@ export default function CheckoutPage() {
     incrementDonation(getTotalDonation())
     
     // 주문 완료 페이지로 이동
-    router.push('/order-complete')
+    window.location.href = `${basePath}/order-complete/`
     
     // 장바구니 비우기
     clearCart()

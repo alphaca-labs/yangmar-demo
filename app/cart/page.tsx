@@ -1,10 +1,10 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cart'
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export default function CartPage() {
-  const router = useRouter()
   const { items, removeItem, updateQuantity, getTotalDonation, getTotalPrice } = useCartStore()
 
   if (items.length === 0) {
@@ -12,9 +12,9 @@ export default function CartPage() {
       <div className="container-custom py-12 text-center">
         <h1 className="text-3xl font-bold mb-4">장바구니가 비어있습니다</h1>
         <p className="text-gray-600 mb-8">양마르의 따뜻한 양말을 만나보세요</p>
-        <button onClick={() => router.push('/products')} className="btn-primary">
+        <a href={`${basePath}/products/`} className="btn-primary">
           상품 보러가기
-        </button>
+        </a>
       </div>
     )
   }
@@ -24,7 +24,6 @@ export default function CartPage() {
       <h1 className="text-3xl md:text-4xl font-bold mb-8">장바구니</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* 장바구니 아이템 */}
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
             <div key={item.id} className="border border-gray-200 p-4 flex gap-4">
@@ -40,38 +39,28 @@ export default function CartPage() {
                   <button
                     onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
                     className="w-8 h-8 border border-gray-300 hover:border-black"
-                  >
-                    -
-                  </button>
+                  >-</button>
                   <span className="w-8 text-center">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="w-8 h-8 border border-gray-300 hover:border-black"
-                  >
-                    +
-                  </button>
+                  >+</button>
                   <button
                     onClick={() => removeItem(item.id)}
                     className="ml-auto text-sm text-gray-600 hover:text-black"
-                  >
-                    삭제
-                  </button>
+                  >삭제</button>
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-bold">
-                  ₩{(item.price * item.quantity).toLocaleString()}
-                </p>
+                <p className="font-bold">₩{(item.price * item.quantity).toLocaleString()}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* 주문 요약 */}
         <div className="lg:col-span-1">
           <div className="border-2 border-black p-6 sticky top-24">
             <h2 className="text-xl font-bold mb-4">주문 요약</h2>
-            
             <div className="space-y-3 mb-6">
               <div className="flex justify-between">
                 <span className="text-gray-600">상품 금액</span>
@@ -89,18 +78,13 @@ export default function CartPage() {
 
             <div className="bg-black text-white p-4 text-center mb-6">
               <p className="text-sm mb-1">이 주문으로</p>
-              <p className="text-2xl font-bold">
-                🎁 {getTotalDonation()}켤레
-              </p>
+              <p className="text-2xl font-bold">🎁 {getTotalDonation()}켤레</p>
               <p className="text-sm mt-1">기부됩니다</p>
             </div>
 
-            <button
-              onClick={() => router.push('/checkout')}
-              className="w-full btn-primary"
-            >
+            <a href={`${basePath}/checkout/`} className="w-full btn-primary block text-center">
               주문하기
-            </button>
+            </a>
           </div>
         </div>
       </div>
